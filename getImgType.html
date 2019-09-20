@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<input type="file" id="myfileinput"/>
+<button onclick="show()">点击获取图片类型</button>
+<div id="type"></div>
+<script>
+function show() {
+    var fileInput = document.getElementById("myfileinput");
+    var file = fileInput.files[0];
+    var reader = new FileReader();
+    reader.addEventListener("loadend", function() {
+        var unit = new Uint8Array(reader.result);
+        if (unit.slice(0,2).join(',') === '255,216' && unit.slice(unit.length - 2).join(',') ==='255,217') {
+            document.getElementById("type").innerText = 'jpg';
+        } else if (unit.slice(0,8).join(',') === '137,80,78,71,13,10,26,10') {
+            document.getElementById("type").innerText = 'png';
+        } else if (unit.slice(0,6).join(',') === '71,73,70,56,57,97' || unit.slice(0,6).join(',') === '71,73,70,56,55,97') {
+            document.getElementById("type").innerText = 'gif';
+        } else if (unit.slice(0,2).join(",") === '66,77') {
+            document.getElementById("type").innerText = 'bmp';
+        }
+    });
+    reader.readAsArrayBuffer(file);
+    console.log(reader);
+}
+
+</script>
+</body>
+</html>
