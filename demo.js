@@ -1,9 +1,8 @@
 
 onmessage = (e) => {
     var start = Date.now();
+    var text, end;
     var unit = new Uint8Array(e.data);
-    var text;
-    var end;
     if (unit.slice(0,2).join(',') === '255,216' && unit.slice(unit.length - 2).join(',') ==='255,217') {
         text = '该文件的格式是：jpg';
     } else if (unit.slice(0,8).join(',') === '137,80,78,71,13,10,26,10') {

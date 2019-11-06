@@ -13,8 +13,7 @@ function show() {
     var file = fileInput.files[0];
     var reader = new FileReader();
     reader.addEventListener("loadend", function() {
-        var start;
-        start = Date.now();
+        var start = Date.now();
         var text,end;
         var unit = new Uint8Array(reader.result);
         if (unit.slice(0,2).join(',') === '255,216' && unit.slice(unit.length - 2).join(',') ==='255,217') {
@@ -28,6 +27,7 @@ function show() {
         }
         end = Date.now();
         console.log(end-start);
+        console.log(end, start);
         document.getElementById("type").innerText = text;
     });
     reader.readAsArrayBuffer(file);
