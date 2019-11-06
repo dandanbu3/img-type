@@ -13,16 +13,22 @@ function show() {
     var file = fileInput.files[0];
     var reader = new FileReader();
     reader.addEventListener("loadend", function() {
+        var start;
+        start = Date.now();
+        var text,end;
         var unit = new Uint8Array(reader.result);
         if (unit.slice(0,2).join(',') === '255,216' && unit.slice(unit.length - 2).join(',') ==='255,217') {
-            document.getElementById("type").innerText = '该文件的格式是：jpg';
+            text = '该文件的格式是：jpg';
         } else if (unit.slice(0,8).join(',') === '137,80,78,71,13,10,26,10') {
-            document.getElementById("type").innerText = '该文件的格式是：png';
+            text = '该文件的格式是：png';
         } else if (unit.slice(0,6).join(',') === '71,73,70,56,57,97' || unit.slice(0,6).join(',') === '71,73,70,56,55,97') {
-            document.getElementById("type").innerText = '该文件的格式是：gif';
+            text = '该文件的格式是：gif';
         } else if (unit.slice(0,2).join(",") === '66,77') {
-            document.getElementById("type").innerText = '该文件的格式是：bmp';
+            text = '该文件的格式是：bmp';
         }
+        end = Date.now();
+        console.log(end-start);
+        document.getElementById("type").innerText = text;
     });
     reader.readAsArrayBuffer(file);
     console.log(reader);

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<input type="file" id="myfileinput"/>
+<button onclick="show()">点击获取图片类型</button>
+<div id="type"></div>
+<script>
+var start,end;
+var w = new Worker("demo.js");
+w.onmessage = function(event) {
+    console.log(event.data.time);
+    document.getElementById("type").innerText = event.data.text;
+};
+
+function show() {
+    var fileInput = document.getElementById("myfileinput");
+    var file = fileInput.files[0];
+    var reader = new FileReader();
+    reader.addEventListener("loadend", function() {
+        w.postMessage(reader.result);
+    });
+    reader.readAsArrayBuffer(file);
+    console.log(reader);
+}
+
+</script>
+</body>
+</html>
