@@ -15,5 +15,5 @@ onmessage = (e) => {
     end = Date.now();
     console.log(end - start);
     console.log(end, start);
-    postMessage({text: '该文件的格式是：jpg', time: end-start});
+    postMessage({text: text, time: end-start});
 }
