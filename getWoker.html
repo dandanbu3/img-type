@@ -25,7 +25,8 @@ function show() {
     var file = fileInput.files[0];
     var reader = new FileReader();
     reader.addEventListener("loadend", function() {
-        w.postMessage(reader.result);
+        var unit = new Uint8Array(reader.result).buffer;
+        w.postMessage(unit, [unit]);
     });
     reader.readAsArrayBuffer(file);
     console.log(reader);
